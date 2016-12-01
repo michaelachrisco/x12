@@ -131,13 +131,20 @@ IEA*1*000000007~"
       ins.MedicareStatusCode = 'E'
       ins.EmploymentStatusCode = 'FT'
     }
-    loop.REF { |ref|
-      ref.ReferenceIdentificationQualifier = '0F'
-      ref.ReferenceIdentification = '152239999'
-    }
-    loop.REF { |ref|
-      ref.ReferenceIdentificationQualifier = '1L'
-      ref.ReferenceIdentification = 'Blue'
+    loop.REF.repeat do |r|
+      r.ReferenceIdentificationQualifier = 'OF'
+      r.ReferenceIdentification = '152239999'
+      # This is only nessessary because we have two REF lines within the same loop.
+      #TODO: Find better solution than compound REF Segments.
+      r.repeat do |x|
+        x.ReferenceIdentificationQualifier = '1L'
+        x.ReferenceIdentification = 'Blue'
+      end
+    end
+    loop.DTP { |dtp|
+      dtp.DateTimeQualifier = '336'
+      dtp.DateTimePeriodFormatQualifier = 'D8'
+      dtp.DateTimePeriod = '20070101'
     }
   end
 

@@ -41,9 +41,10 @@
 				</Loop>
 				<Loop name="L2000" required="y" comment="2000 Loop Member Level Detail" >
 					<Segment name="INS" max="1" required="y" />
-	        <Segment name="REF" max="1" required="y" comment="Subscriber Identifier"/>
-	        <Segment name="REF" max="1" required="y" comment="Member Policy Number"/>
-	        <Segment name="REF" max="13" required="y" comment="Member Supplemental Identifier"/>
+					<Segment name="REF" max="1" required="y" />
+	        <!-- <Segment name="REF" max="1" required="y" comment="Subscriber Identifier"/> -->
+	        <!-- <Segment name="REF" max="1" required="y" comment="Member Policy Number"/>
+	        <Segment name="REF" max="13" required="y" comment="Member Supplemental Identifier"/> -->
 	        <Segment name="DTP" max="24" required="n" comment="Member Level Dates. Required for most vendors."/>
 	      </Loop>
 	      <Loop name="L2100A" max="1" required="n" comment="2100A" >
