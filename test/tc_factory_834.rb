@@ -240,10 +240,6 @@ IEA*1*000000007~"
       dtp.DateTimePeriod = '20111016'
     }
     count += 2
-   #L2100C
-   #L2100D
-   #L2100G
-   #L2300
 
     @r.SE.NumberOfIncludedSegments = count + 1
     @r.SE.TransactionSetControlNumber  = '0007'
