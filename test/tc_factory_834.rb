@@ -42,19 +42,9 @@ NM1*IL*1*BLUTH*LUCILLE****34*152239999~
 N3*224 N DES PLAINES*6TH FLOOR~
 N4*CHICAGO*IL*60661*USA~
 DMG*D8*19720121*F*M~
-HD*030**VIS**EMP~
+HD*030**VIS*Vision Plan*EMP~
 DTP*348*D8*20111016~
-INS*N*19*030*XN*A*E***N*N~
-REF*OF*152239999~
-REF*1L*Blue~
-DTP*357*D8*20111015~
-NM1*IL*1*BLUTH*BUSTER~
-N3*224 N DES PLAINES*6TH FLOOR~
-N4*CHICAGO*IL*60661*USA~
-DMG*D**19911015*M-HD*030**VIS~
-DTP*348*D8*20110101~
-DTP*349*D8*20111015~
-SE*24*0007~
+SE*16*0007~
 GE*1*7~
 IEA*1*000000007~"
 
@@ -114,7 +104,7 @@ IEA*1*000000007~"
 
   def loop_l1000c(loop)
     loop.N1 { |n|
-      n.EntityIdentifierCode1 = "IN"
+      n.EntityIdentifierCode1 = "TV"
       n.Name = "FOO C"
       n.IdentificationCodeQualifier = "FI"
       n.IdentificationCode = "997999999"
@@ -197,7 +187,7 @@ IEA*1*000000007~"
       isa.UsageIndicator = 'T'
       isa.ComponentElementSeparator = ':'
     }
-    @r.GS {|gs|
+    @r.GS { |gs|
       gs.FunctionalIdentifierCode = 'BE'
       gs.ApplicationSendersCode = '901234572000'
       gs.ApplicationReceiversCode = '908887732000'
@@ -206,7 +196,7 @@ IEA*1*000000007~"
       gs.GroupControlNumber = '7'
       gs.ResponsibleAgencyCode = 'X'
       gs.VersionReleaseIndustryIdentifierCode = '005010X220A1'
-      }
+    }
 
     @r.ST.TransactionSetIdentifierCode = '834'
     @r.ST.TransactionSetControlNumber  = '0007'
@@ -237,6 +227,19 @@ IEA*1*000000007~"
 
     loop_l2100a(@r.L2100A)
     count += 4
+
+    @r.L2300.HD { |hd|
+      hd.MaintenanceTypeCode = '030'
+      hd.InsuranceLineCode = 'VIS'
+      hd.PlanCoverageDescription = 'Vision Plan'
+      hd.CoverageLevelCode = 'EMP'
+    }
+    @r.L2300.DTP { |dtp|
+      dtp.DateTimeQualifier = '348'
+      dtp.DateTimePeriodFormatQualifier = 'D8'
+      dtp.DateTimePeriod = '20111016'
+    }
+    count += 2
    #L2100C
    #L2100D
    #L2100G
