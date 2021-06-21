@@ -29,14 +29,15 @@
     <Loop name="L834" max="inf" comment="This X12 Transaction Set contains the format and establishes the data contents of the Benefit Enrollment and Maintenance Transaction Set (834) for use within the context of an Electronic Data Interchange (EDI) environment.">
         <Segment name="ST"  max="1" required="y" />
         <Segment name="BGN" max="1" required="y" />
-        <Segment name="DTP" max="1" required="n" />    <Segment name="QTY" max="1" required="n" />
+        <Segment name="DTP" max="1" required="n" />
+        <Segment name="QTY" max="1" required="n" />
         <Loop name="L1000A" max="1" required="y" comment="Payer Identification">
           <Segment name="N1" max="1" required="y" />
         </Loop>
         <Loop name="L1000B" max="1" required="y" comment="Payee Identification" >
           <Segment name="N1" max="1" required="y" />
         </Loop>
-        <Loop name="L2000" max="infinite" required="y" comment="2000 Loop Member Level Detail" >
+        <Loop name="L2000" max="infinite" required="y" comment="2000 Loop Member Level Detail">
           <Segment name="INS" max="1" required="y" />
           <Segment name="REF" min="3" max="3" required="y" comment="Subscriber Identifier, Member Policy Number, Member Supplemental Identifier"/>
           <Loop name="L2100A" max="1" required="n" comment="2100A" >
@@ -64,6 +65,11 @@
             <Segment name="N3" max="1" required="y" comment="Provider Residence Street Address"/>
             <Segment name="N4" max="1" required="n" comment="Provider City, State, Zip Code"/>
             <Segment name="PER" max="1" required="n" comment="Provider Contant."/>
+            <Loop name="L2320" required="n" comment="COB information">
+              <Segment name="COB" max="1" required="y"/>
+              <Segment name="DTP" min="1" max="1" required="y" comment="Health Coverage Date"/>
+              <Segment name="NM1" max="1" required="y" comment="provider"/>
+            </Loop>
             <Loop name="L2700" max="1" comment="Dual Eligible Members">
               <Segment name="LS" max="1" required="y" comment="LS*2700"/>
               <Segment name="LX" max="1" required="y" comment="Provider Information"/>
@@ -72,6 +78,7 @@
                 <Field name="Status" min="1" max="1" comment="no idea"/>
               </Segment>
               <Segment name="REF" max="1" required="y" comment="Provider Information"/>
+              <Segment name="DTP" min="1" max="1" required="y" comment="Provider Coverage Dates"/>
               <Segment name="LE" max="1" required="n" comment="LE*2700"/>
             </Loop>
           </Loop>
