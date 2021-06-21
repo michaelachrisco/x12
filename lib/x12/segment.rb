@@ -31,7 +31,7 @@ module X12
 
     # Parses this segment out of a string, puts the match into value, returns the rest of the string - nil
     # if cannot parse
-    def parse(str)
+    def parse_helper(str)
       s = str
       # puts "Parsing segment #{name} from #{s[0..10]} with regexp [#{regexp.source}]"
       quick_match = s.start_with?("#{name}#{field_separator}")
@@ -41,11 +41,10 @@ module X12
       m = regexp.match(s)
       s = m.post_match
       self.parsed_str = m[0]
-      s = do_repeats(s)
-
       #puts "Parsed segment "+self.inspect
       return s
     end # parse
+
 
     # Render all components of this segment as string suitable for EDI
     def render
@@ -73,13 +72,10 @@ module X12
             field_re = "(#{field_re})?" unless i.required
             s+field_re
           } + Regexp.escape(segment_separator)
-          puts "using constant field #{re_str}"
           @regexp = Regexp.new(re_str)
         else
           # Simple match
           @regexp = Regexp.new("^#{name}#{Regexp.escape(field_separator)}[^#{Regexp.escape(segment_separator)}]*#{Regexp.escape(segment_separator)}")
-          puts "simple is #{@regexp}"
-          @regexp
         end
         #puts sprintf("%s %p", name, @regexp)
       end

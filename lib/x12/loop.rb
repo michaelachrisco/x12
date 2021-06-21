@@ -43,9 +43,10 @@ module X12
 
     # Parse a string and fill out internal structures with the pieces of it. Returns 
     # an unparsed portion of the string or the original string if nothing was parsed out.
-    def parse(str)
-      puts "#{$count}: parse for #{name} stack #{caller.size}" if name == 'L2000'
+    def parse_helper(str)
+      puts "#{$count}: parse for #{name}" if name == 'L2000'
       $count ||=0
+      # $count+=1 if name == 'L2000'
       return nil if name == 'L2000' && (($count+=1) > 10)
       #puts "Parsing loop #{name}: "+str
       s = str
@@ -58,12 +59,8 @@ module X12
         return nil
       else
         self.parsed_str = str[0..-s.length-1]
-        puts "possible callback for #{name}" if name == "L2000"
-        # debugger   if name == "L2000"
-        s = do_repeats(s)
+        return s
       end
-      #puts 'Parsed loop '+self.inspect
-      return s
     end # parse
 
     # Render all components of this loop as string suitable for EDI
