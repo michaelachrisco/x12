@@ -34,11 +34,11 @@ module X12
     def parse(str)
       s = str
       # puts "Parsing segment #{name} from #{s[0..10]} with regexp [#{regexp.source}]"
+      quick_match = s.start_with?("#{name}#{field_separator}")
+      puts "#{name} #{s[0..10]} with regexp [#{regexp.source}] matched #{quick_match ? s[0..10] : 'nothing'}"
+
+      return nil unless quick_match
       m = regexp.match(s)
-      puts "#{name} #{s[0..10]} with regexp [#{regexp.source}] matched #{m ? m[0][0..10] : 'nothing'}"
-
-      return nil unless m
-
       s = m.post_match
       self.parsed_str = m[0]
       s = do_repeats(s)
