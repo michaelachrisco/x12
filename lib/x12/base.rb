@@ -78,7 +78,7 @@ module X12
     # Try to parse the current element one more time if required. Returns the rest of the string
     # or the same string if no more repeats are found or required.
     def do_repeats(s)
-      if self.repeats.end > 1 # repeat_count + 1
+      if self.repeats.end > repeat_count + 1
         possible_repeat = self.dup
         possible_repeat.repeat_count = repeat_count + 1
         p_s = possible_repeat.parse(s)
