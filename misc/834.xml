@@ -53,19 +53,29 @@
             <Segment name="N3" max="1" required="n" comment="Member Residence Street Address. For Dependent Records only."/>
             <Segment name="N4" max="1" required="n" comment="Member City, State, Zip Code. For Dependent Records only."/>
           </Loop>
-          <Loop name="L2300" max="99" required="y" comment="2300" >
+          <Loop name="L2300" max="1" required="y" comment="2300" >
             <Segment name="HD" max="1" required="y" comment="Health Coverage"/>
             <Segment name="DTP" min="1" max="2" required="y" comment="Health Coverage Dates"/>
             <Segment name="REF" max="1" required="y" comment="Health Coverage Policy Number"/>
-            <Loop name="L2310" max="1" required="y" comment="PROVIDER INFORMATION" >
-                <Segment name="LS" required="y" comment="LS*2700"/>
-                <Segment name="LX" max="1" required="y" comment="Provider Information"/>
-                <Segment name="NM1" max="1" required="y" comment="Provider Name"/>
-                <Segment name="N3" max="1" required="y" comment="Provider Residence Street Address"/>
-                <Segment name="N4" max="1" required="n" comment="Provider City, State, Zip Code"/>
-                <Segment name="LE" required="n" comment="LE*2700"/>
-              </Loop>
           </Loop>
+          <Loop name="L2310" max="1" required="y" comment="PROVIDER INFORMATION" >
+            <Segment name="LX" max="1" required="y" comment="Provider Information"/>
+            <Segment name="NM1" max="1" required="y" comment="Provider Name"/>
+            <Segment name="N3" max="1" required="y" comment="Provider Residence Street Address"/>
+            <Segment name="N4" max="1" required="n" comment="Provider City, State, Zip Code"/>
+            <Segment name="PER" max="1" required="n" comment="Provider Contant."/>
+            <Loop name="L2700" max="1" comment="Dual Eligible Members">
+              <Segment name="LS" max="1" required="y" comment="LS*2700"/>
+              <Segment name="LX" max="1" required="y" comment="Provider Information"/>
+              <Segment name="N1" max="1" required="y" comment="Provider Information">
+                <Field name="ID" min="1" max="1" comment="no idea"/>
+                <Field name="Status" min="1" max="1" comment="no idea"/>
+              </Segment>
+              <Segment name="REF" max="1" required="y" comment="Provider Information"/>
+              <Segment name="LE" max="1" required="n" comment="LE*2700"/>
+            </Loop>
+          </Loop>
+
         </Loop>
       <Segment name="SE" max="1" required="y" comment="Transaction Set Trailer"/>
     </Loop>
