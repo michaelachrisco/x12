@@ -29,6 +29,20 @@ module X12
   #
   
   class XMLDefinitions < Hash
+    NAME ="name".freeze
+    VALUE ="value".freeze
+    CONST = "const".freeze
+    ENTRY = "entry".freeze
+    FIELD = "field".freeze
+    MAX = "max".freeze
+    MIN = "min".freeze
+    REQUIRED = "required".freeze
+    TYPE = "type".freeze
+    VALIDATION = "validation".freeze
+    STRING = "string".freeze
+    INT = "int".freeze
+    LONG = "long".freeze
+    DOUBLE = "double".freeze
 
     # Parse definitions out of XML file
     def initialize(str)
@@ -72,17 +86,17 @@ module X12
     def parse_type(s)
       return case s
              when nil
-               'string'
+               STRING
              when /^C.+$/ 
                s
              when /^i(nt(eger)?)?$/i
-               'int'
+               INT
              when /^l(ong)?$/i
-               'long'
+               LONG
              when /^d(ouble)?$/i
-               'double'
+               DOUBLE
              when /^s(tr(ing)?)?$/i
-               'string'
+               STRING
              else
                nil
              end # case
@@ -99,13 +113,13 @@ module X12
     end #parse_int
 
     def parse_attributes(e)
-      throw Exception.new("No name attribute found for : #{e.inspect}")          unless name = e.attributes["name"] 
-      throw Exception.new("Cannot parse attribute 'min' for: #{e.inspect}")      unless min = parse_int(e.attributes["min"])
-      throw Exception.new("Cannot parse attribute 'max' for: #{e.inspect}")      unless max = parse_int(e.attributes["max"])
-      throw Exception.new("Cannot parse attribute 'type' for: #{e.inspect}")     unless type = parse_type(e.attributes["type"])
-      throw Exception.new("Cannot parse attribute 'required' for: #{e.inspect}") if (required = parse_boolean(e.attributes["required"])).nil?
+      throw Exception.new("No name attribute found for : #{e.inspect}")          unless name = e.attributes[NAME]
+      throw Exception.new("Cannot parse attribute 'min' for: #{e.inspect}")      unless min = parse_int(e.attributes[MIN])
+      throw Exception.new("Cannot parse attribute 'max' for: #{e.inspect}")      unless max = parse_int(e.attributes[MAX])
+      throw Exception.new("Cannot parse attribute 'type' for: #{e.inspect}")     unless type = parse_type(e.attributes[TYPE])
+      throw Exception.new("Cannot parse attribute 'required' for: #{e.inspect}") if (required = parse_boolean(e.attributes[REQUIRED])).nil?
       
-      validation = e.attributes["validation"]
+      validation = e.attributes[VALIDATION]
       min = 1 if required and min < 1
       max = 999999 if max == 0
 
@@ -117,7 +131,7 @@ module X12
 
       # FIXME - for compatibility with d12 - constants are stored in attribute 'type' and are enclosed in
       # double quotes
-      const_field =  e.attributes["const"]
+      const_field =  e.attributes[CONST]
       if(const_field)
         type = "\"#{const_field}\""
       end
@@ -128,8 +142,8 @@ module X12
     def parse_table(e)
       name, min, max, type, required, validation = parse_attributes(e)
 
-      content = e.find("Entry").inject({}) {|t, entry|
-        t[entry.attributes["name"]] = entry.attributes["value"]
+      content = e.find(ENTRY).inject({}) {|t, entry|
+        t[entry.attributes[NAME]] = entry.attributes[VALUE]
         t
       }
       Table.new(name, content)
@@ -138,7 +152,7 @@ module X12
     def parse_segment(e)
       name, min, max, type, required, validation = parse_attributes(e)
 
-      fields = e.find("Field").inject([]) {|f, field|
+      fields = e.find(FIELD).inject([]) {|f, field|
         f << parse_field(field)
       }
       Segment.new(name, fields, Range.new(min, max))
@@ -147,7 +161,7 @@ module X12
     def parse_composite(e)
       name, min, max, type, required, validation = parse_attributes(e)
 
-      fields = e.find("Field").inject([]) {|f, field|
+      fields = e.find(FIELD).inject([]) {|f, field|
         f << parse_field(field)
       }
       Composite.new(name, fields)

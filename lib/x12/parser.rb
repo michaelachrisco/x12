@@ -37,6 +37,7 @@ module X12
     # Creates a parser out of a definition
     def initialize(file_name)
       save_definition = @x12_definition
+      $count = 0
 
       # Deal with Microsoft devices
       # get the current working directory

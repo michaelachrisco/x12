@@ -33,9 +33,9 @@ module X12
     # if cannot parse
     def parse(str)
       s = str
-      #puts "Parsing segment #{name} from #{s} with regexp [#{regexp.source}]"
+      # puts "Parsing segment #{name} from #{s[0..10]} with regexp [#{regexp.source}]"
       m = regexp.match(s)
-      #puts "Matched #{m ? m[0] : 'nothing'}"
+      puts "#{name} #{s[0..10]} with regexp [#{regexp.source}] matched #{m ? m[0][0..10] : 'nothing'}"
 
       return nil unless m
 
@@ -73,10 +73,13 @@ module X12
             field_re = "(#{field_re})?" unless i.required
             s+field_re
           } + Regexp.escape(segment_separator)
+          puts "using constant field #{re_str}"
           @regexp = Regexp.new(re_str)
         else
           # Simple match
           @regexp = Regexp.new("^#{name}#{Regexp.escape(field_separator)}[^#{Regexp.escape(segment_separator)}]*#{Regexp.escape(segment_separator)}")
+          puts "simple is #{@regexp}"
+          @regexp
         end
         #puts sprintf("%s %p", name, @regexp)
       end

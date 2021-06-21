@@ -24,7 +24,7 @@
 module X12
   
   #
-  # Class indicating the absense of any X12 element, be it loop, segment, or anything else like that.
+  # Class indicating the absence of any X12 element, be it loop, segment, or anything else like that.
   #
   
   class Empty < Base

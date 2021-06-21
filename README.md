@@ -46,6 +46,7 @@ Or install it yourself as:
     Validation is not implemented.
     Field types are ignored.
     No access methods for composites’ fields.
+    Segments can't repeat by repeating the declaration.
 
 # Acknowledgments
 
@@ -55,10 +56,14 @@ The authors of the project were inspired by the following works:
     * The Ruby port of the above by Chris Parker, rubyforge.org/projects/x12-parser/
     * This project originated from App Design's X12 parser.  
 	* Project was forked by Sean Walberg, creating version 1.2.0 in April 2012.
-	* Project was forked by Marty Petersen in November 2012, creating pd_x12. 
+	* Project was forked by Marty Petersen in November 2012, creating pd_x12.
+    * Project was forked by GoodMeasures, Jun 2021, trying to make it work for large eligibility files, and work for Ruby 2.7.1. In particular, work for a file of about 9000 members from Wellcare.
 
 
 # Change Log
+* 834 File was fixed - it was only processing one transaction, and had
+  multiple syntax errors/missing elements.
+
 11/2/15 - release 1.5.3, 1.5.2
 * Updated 837p.xml Loop 20102AB to include REF segments
 * fixed misspelling

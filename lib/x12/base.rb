@@ -32,6 +32,7 @@ module X12
 
     attr_reader   :name, :repeats
     attr_accessor :segment_separator, :field_separator, :composite_separator, :next_repeat, :parsed_str, :nodes
+    attr_accessor :repeat_count
     
 
     # Creates a new base element with a given name, array of sub-elements, and array of repeats if any.
@@ -45,7 +46,7 @@ module X12
       @segment_separator   = '~'
       @field_separator     = '*'
       @composite_separator = ':'
-
+      @repeat_count = 0
       #puts "Created #{name} #{object_id} #{self.class}  "
     end
 
@@ -77,12 +78,16 @@ module X12
     # Try to parse the current element one more time if required. Returns the rest of the string
     # or the same string if no more repeats are found or required.
     def do_repeats(s)
-      if self.repeats.end > 1
+      if self.repeats.end > 1 # repeat_count + 1
         possible_repeat = self.dup
+        possible_repeat.repeat_count = repeat_count + 1
         p_s = possible_repeat.parse(s)
         if p_s
+          puts "assigning repeat for #{name}" if name == "L2000"
           s = p_s
           self.next_repeat = possible_repeat
+        else
+          puts "no repeat for #{name}" if name == "L2000"
         end # if parsed
       end # more repeats
       s
