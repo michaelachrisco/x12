@@ -31,7 +31,7 @@ module X12
 
     # Parses this segment out of a string, puts the match into value, returns the rest of the string - nil
     # if cannot parse
-    def parse_helper(str)
+    def parse_helper(str, yield_loop_name, block)
       s = str
       # puts "Parsing segment #{name} from #{s[0..10]} with regexp [#{regexp.source}]"
       quick_match = s.start_with?("#{name}#{field_separator}")

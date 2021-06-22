@@ -43,23 +43,23 @@ module X12
 
     # Parse a string and fill out internal structures with the pieces of it. Returns 
     # an unparsed portion of the string or the original string if nothing was parsed out.
-    def parse_helper(str)
-      puts "#{$count}: parse for #{name}" if name == 'L2000'
+    def parse_helper(str, yield_loop_name, block)
+      # puts "#{$count}: parse for #{name}" if name == yield_loop_name
       $count ||=0
-      # $count+=1 if name == 'L2000'
-      return nil if name == 'L2000' && (($count+=1) > 10)
+      # $count+=1 if name == yield_loop_name
+      # return nil if name == yield_loop_name && (($count+=1) > 2)
       #puts "Parsing loop #{name}: "+str
-      s = str
-      nodes.each{|i|
-        m = i.parse(s)
-        s = m if m
+      current_location = str
+      nodes.each{|node|
+        match_location = node.parse(current_location, yield_loop_name, block)
+        current_location = match_location if match_location
       } 
-      if str == s
-        puts "failed parse for #{name}" if name == "L2000"
+      if str == current_location
         return nil
       else
-        self.parsed_str = str[0..-s.length-1]
-        return s
+        self.parsed_str = str[0..-current_location.length-1]
+        block.call(self) if yield_loop_name && name == yield_loop_name
+        return current_location
       end
     end # parse
 
