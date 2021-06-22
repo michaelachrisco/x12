@@ -26,7 +26,7 @@ If running Ubuntu, you may need to install libxml2-dev
 
 Add this line to your application's Gemfile:
 
-    gem 'pd_x12'
+    gem 'gm_x12'
 
 And then execute:
 
@@ -34,7 +34,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install pd_x12
+    $ gem install gm_x12
 
 
  
@@ -56,7 +56,7 @@ The authors of the project were inspired by the following works:
     * The Ruby port of the above by Chris Parker, rubyforge.org/projects/x12-parser/
     * This project originated from App Design's X12 parser.  
 	* Project was forked by Sean Walberg, creating version 1.2.0 in April 2012.
-	* Project was forked by Marty Petersen in November 2012, creating pd_x12.
+	* Project was forked by Marty Petersen in November 2012, creating gm_x12.
     * Project was forked by GoodMeasures, Jun 2021, trying to make it work for large eligibility files, and work for Ruby 2.7.1. In particular, work for a file of about 9000 members from Wellcare.
 
 
