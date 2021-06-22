@@ -42,7 +42,7 @@
           <Segment name="REF" min="3" max="3" required="y" comment="Subscriber Identifier, Member Policy Number, Member Supplemental Identifier"/>
           <Loop name="L2100A" max="1" required="n" comment="2100A" >
             <Segment name="NM1" max="1" required="y" comment="Member Name"/>
-            <Segment name="PER" max="1" required="n" comment="Member Communications Numbers"/>
+            <Segment name="PER" max="3" required="n" comment="Member Communications Numbers"/>
             <Segment name="N3" max="1" required="n" comment="Member Residence Street Address"/>
             <Segment name="N4" max="1" required="n" comment="Member City, State, Zip Code"/>
             <Segment name="DMG" max="1" required="n" comment="Member Demographics"/>
@@ -64,7 +64,7 @@
             <Segment name="NM1" max="1" required="y" comment="Provider Name"/>
             <Segment name="N3" max="1" required="y" comment="Provider Residence Street Address"/>
             <Segment name="N4" max="1" required="n" comment="Provider City, State, Zip Code"/>
-            <Segment name="PER" max="1" required="n" comment="Provider Contant."/>
+            <Segment name="PER" max="1" required="n" comment="Provider Contact."/>
             <Loop name="L2320" required="n" comment="COB information">
               <Segment name="COB" max="1" required="y"/>
               <Segment name="DTP" min="1" max="1" required="y" comment="Health Coverage Date"/>
