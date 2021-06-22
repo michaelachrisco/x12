@@ -84,9 +84,7 @@ module X12
         p_s = possible_repeat.parse_helper(s, yield_loop_name, block)
         if p_s
           s = p_s
-          if yield_loop_name && yield_loop_name == name
-            block.call(possible_repeat)
-          else
+          unless yield_loop_name && yield_loop_name == name
             current_element.next_repeat = possible_repeat
           end
           current_element = possible_repeat
@@ -105,6 +103,7 @@ module X12
 
     # Empty out the current element
     def set_empty!
+      @fields = nil
       @next_repeat = nil
       @parsed_str = nil
       self
