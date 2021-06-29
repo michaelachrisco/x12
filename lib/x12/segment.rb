@@ -31,21 +31,20 @@ module X12
 
     # Parses this segment out of a string, puts the match into value, returns the rest of the string - nil
     # if cannot parse
-    def parse(str)
+    def parse_helper(str, yield_loop_name, block)
       s = str
-      #puts "Parsing segment #{name} from #{s} with regexp [#{regexp.source}]"
+      # puts "Parsing segment #{name} from #{s[0..10]} with regexp [#{regexp.source}]"
+      quick_match = s.start_with?("#{name}#{field_separator}")
+      # puts "#{name} #{s[0..10]} with regexp [#{regexp.source}] matched #{quick_match ? s[0..10] : 'nothing'}"
+
+      return nil unless quick_match
       m = regexp.match(s)
-      #puts "Matched #{m ? m[0] : 'nothing'}"
-
-      return nil unless m
-
       s = m.post_match
       self.parsed_str = m[0]
-      s = do_repeats(s)
-
       #puts "Parsed segment "+self.inspect
       return s
     end # parse
+
 
     # Render all components of this segment as string suitable for EDI
     def render

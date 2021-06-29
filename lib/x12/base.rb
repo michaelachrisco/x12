@@ -45,7 +45,6 @@ module X12
       @segment_separator   = '~'
       @field_separator     = '*'
       @composite_separator = ':'
-
       #puts "Created #{name} #{object_id} #{self.class}  "
     end
 
@@ -76,20 +75,35 @@ module X12
 
     # Try to parse the current element one more time if required. Returns the rest of the string
     # or the same string if no more repeats are found or required.
-    def do_repeats(s)
-      if self.repeats.end > 1
-        possible_repeat = self.dup
-        p_s = possible_repeat.parse(s)
+    def do_repeats(s, yield_loop_name, block)
+      repeat_count = 1
+      current_element = self
+      while(self.repeats.end > repeat_count)
+        possible_repeat = current_element.dup
+        repeat_count+=1
+        p_s = possible_repeat.parse_helper(s, yield_loop_name, block)
         if p_s
           s = p_s
-          self.next_repeat = possible_repeat
+          unless yield_loop_name && yield_loop_name == name
+            current_element.next_repeat = possible_repeat
+          end
+          current_element = possible_repeat
+        else
+          break
         end # if parsed
       end # more repeats
       s
     end # do_repeats
 
+    def parse(str, yield_loop_name, block)
+      s = parse_helper(str, yield_loop_name, block)
+      s = do_repeats(s, yield_loop_name, block) if(s)
+      s
+    end
+
     # Empty out the current element
     def set_empty!
+      @fields = nil
       @next_repeat = nil
       @parsed_str = nil
       self

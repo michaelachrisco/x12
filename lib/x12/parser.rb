@@ -37,6 +37,7 @@ module X12
     # Creates a parser out of a definition
     def initialize(file_name)
       save_definition = @x12_definition
+      $count = 0
 
       # Deal with Microsoft devices
       # get the current working directory
@@ -72,12 +73,13 @@ module X12
     end # initialize
 
     # Parse a loop of a given name out of a string. Throws an exception if the loop name is not defined.
-    def parse(loop_name, str)
+    def parse(loop_name, str, yield_loop_name=nil, &block)
+      raise "Must provide a block if you specify a yield_loop_name" if yield_loop_name && !block
       loop = @x12_definition[X12::Loop][loop_name]
       #puts "Loops to parse #{@x12_definition[X12::Loop].keys}"
       throw Exception.new("Cannot find a definition for loop #{loop_name}") unless loop
       loop = loop.dup
-      loop.parse(str)
+      loop.parse(str, yield_loop_name, block)
       return loop
     end # parse
 
